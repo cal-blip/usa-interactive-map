@@ -1,0 +1,33 @@
+<!
+
+    // Load GeoJSON data and add it to the map
+    fetch('https://unpkg.com/us-atlas/states-10m.json')
+      .then(response => response.json())
+      .then(data => {
+        L.geoJson(data, {
+          style: {
+            color: '#333',
+            weight: 1,
+            fillOpacity: 0.2
+          },
+          onEachFeature: function(feature, layer) {
+            // Add a popup with the state name
+            layer.bindPopup(feature.properties.name);
+            // Change style on mouseover
+            layer.on('mouseover', function() {
+              layer.setStyle({
+                fillOpacity: 0.5
+              });
+            });
+            // Reset style on mouseout
+            layer.on('mouseout', function() {
+              layer.setStyle({
+                fillOpacity: 0.2
+              });
+            });
+          }
+        }).addTo(map);
+      });
+  </script>
+</body>
+</html>
